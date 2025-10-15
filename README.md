@@ -5,7 +5,7 @@
 
 **CosmicStride** transforms your running and walking activities into cosmic adventures. Track your routes on Earth and visualize them as journeys through space, where every meter you run equals one kilometer toward the stars.
 
-<!-- ![CosmicStride Banner](???) -->
+![CosmicStride Banner](./CosmicStride_logo.png)
 
 ---
 
