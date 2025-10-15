@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import Earth3D from './Earth3D';
 import StatsPanel from './StatsPanel';
 import { mockRoute, calculateRouteDistance } from '@/lib/mockData';
-import { Rocket, Play, RotateCcw } from 'lucide-react';
+// Icons will be emojis for now
+// import { Rocket, Play, RotateCcw } from 'lucide-react';
 
 export default function RouteVisualization() {
   const [isAnimating, setIsAnimating] = useState(false);
@@ -58,7 +59,7 @@ export default function RouteVisualization() {
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-black">
+    <div className="relative w-full h-screen overflow-hidden bg-black flex flex-col">
       {/* 3D Earth Visualization */}
       <Earth3D 
         route={mockRoute} 
@@ -73,13 +74,13 @@ export default function RouteVisualization() {
       />
 
       {/* Control Buttons */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex gap-4">
+      <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-10 flex gap-4">
         {!isAnimating && animationProgress === 0 && (
           <button
             onClick={handleStart}
             className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold rounded-full shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-cyan-500/50"
           >
-            <Rocket className="w-6 h-6 group-hover:rotate-12 transition-transform" />
+            <span className="text-2xl">🚀</span>
             <span className="text-lg">Launch Journey to Space</span>
           </button>
         )}
@@ -89,7 +90,7 @@ export default function RouteVisualization() {
             onClick={handleReset}
             className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-400 hover:to-pink-500 text-white font-semibold rounded-full shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-purple-500/50"
           >
-            <RotateCcw className="w-6 h-6 group-hover:rotate-180 transition-transform duration-500" />
+            <span className="text-2xl">🔄</span>
             <span className="text-lg">Restart Journey</span>
           </button>
         )}
@@ -106,11 +107,11 @@ export default function RouteVisualization() {
       </div>
 
       {/* Title */}
-      <div className="absolute top-6 left-1/2 -translate-x-1/2 z-10 text-center pointer-events-none">
-        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent drop-shadow-2xl">
+      <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 text-center pointer-events-none">
+        <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent drop-shadow-2xl">
           CosmicStride
         </h1>
-        <p className="text-slate-300 text-sm md:text-base mt-2 drop-shadow-lg">
+        <p className="text-slate-300 text-xs md:text-sm mt-1 drop-shadow-lg">
           Every step on Earth is a journey to space
         </p>
       </div>

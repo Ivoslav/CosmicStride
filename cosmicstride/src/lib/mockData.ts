@@ -6,15 +6,18 @@ export interface RoutePoint {
 }
 
 export const mockRoute: RoutePoint[] = [
-  { lat: 42.6977, lng: 23.3219, alt: 550 }, // Start - Sofia center
-  { lat: 42.7000, lng: 23.3250, alt: 555 },
-  { lat: 42.7050, lng: 23.3300, alt: 560 },
-  { lat: 42.7100, lng: 23.3350, alt: 565 },
-  { lat: 42.7150, lng: 23.3400, alt: 570 },
-  { lat: 42.7200, lng: 23.3380, alt: 575 },
-  { lat: 42.7250, lng: 23.3350, alt: 580 },
-  { lat: 42.7300, lng: 23.3320, alt: 585 },
-  { lat: 42.7330, lng: 23.3290, alt: 590 }, // End
+  { lat: 42.6977, lng: 23.3219, alt: 550 },  // Start - Sofia center
+  { lat: 43.7000, lng: 23.3400, alt: 555 },
+  { lat: 44.7100, lng: 23.3600, alt: 560 },
+  { lat: 45.7200, lng: 23.3800, alt: 565 },
+  { lat: 46.7300, lng: 23.4000, alt: 570 },
+  { lat: 47.7400, lng: 23.4200, alt: 575 },
+  { lat: 48.7500, lng: 23.4400, alt: 580 },
+  { lat: 49.7600, lng: 23.4600, alt: 585 },
+  { lat: 50.7700, lng: 23.4800, alt: 590 },
+  { lat: 51.7800, lng: 23.5000, alt: 595 },
+  { lat: 52.7900, lng: 23.5200, alt: 600 },
+  { lat: 53.8000, lng: 23.5400, alt: 605 },  // End - much longer route
 ];
 
 // Space milestones

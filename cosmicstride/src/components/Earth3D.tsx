@@ -26,12 +26,16 @@ function EarthGlobe({ route, showRoute = true }: { route: RoutePoint[], showRout
     }
   });
 
-  // Convert GPS coordinates to 3D sphere coordinates
+  // Convert GPS coordinates to 3D sphere coordinates with elevated arc
   const routePoints = useMemo(() => {
-    return route.map(point => {
+    return route.map((point, index) => {
       const lat = (point.lat * Math.PI) / 180;
       const lng = (point.lng * Math.PI) / 180;
-      const radius = 2.02; // Slightly above Earth surface
+      
+      // Make the route arc upward - add extra height in the middle
+      const progress = index / (route.length - 1);
+      const arcHeight = Math.sin(progress * Math.PI) * 0.3; // Arc peaks at 0.3 units
+      const radius = 2.02 + arcHeight;
       
       const x = radius * Math.cos(lat) * Math.cos(lng);
       const y = radius * Math.sin(lat);
@@ -77,16 +81,16 @@ function EarthGlobe({ route, showRoute = true }: { route: RoutePoint[], showRout
         <Line
           points={routePoints}
           color="#00ffff"
-          lineWidth={3}
+          lineWidth={5}
           transparent
-          opacity={0.9}
+          opacity={1}
         />
       )}
 
       {/* Route start point */}
       {showRoute && routePoints[0] && (
         <mesh position={routePoints[0]}>
-          <sphereGeometry args={[0.03, 16, 16]} />
+          <sphereGeometry args={[0.05, 16, 16]} />
           <meshBasicMaterial color="#00ff00" />
         </mesh>
       )}
@@ -94,7 +98,7 @@ function EarthGlobe({ route, showRoute = true }: { route: RoutePoint[], showRout
       {/* Route end point */}
       {showRoute && routePoints[routePoints.length - 1] && (
         <mesh position={routePoints[routePoints.length - 1]}>
-          <sphereGeometry args={[0.03, 16, 16]} />
+          <sphereGeometry args={[0.05, 16, 16]} />
           <meshBasicMaterial color="#ff0000" />
         </mesh>
       )}
@@ -124,7 +128,9 @@ function Stars() {
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
-          args={[starPositions, 3]}
+          count={starPositions.length / 3}
+          array={starPositions}
+          itemSize={3}
         />
       </bufferGeometry>
       <pointsMaterial
