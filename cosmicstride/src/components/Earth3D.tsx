@@ -4,7 +4,9 @@ import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Sphere, Line } from '@react-three/drei';
 import * as THREE from 'three';
-import { RoutePoint } from '@/lib/mockData';
+import AnimatedRunner from './AnimatedRunner';
+import SpaceRewards from './SpaceRewards';
+import { RoutePoint, Milestone } from '@/lib/mockData';
 
 interface Earth3DProps {
   route: RoutePoint[];

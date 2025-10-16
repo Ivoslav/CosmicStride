@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Earth3D from './Earth3D';
 import StatsPanel from './StatsPanel';
-import { mockRoute, calculateRouteDistance } from '@/lib/mockData';
+import { mockRoute, calculateRouteDistance, calculateSpaceDistanceSimple, getCurrentMilestone } from '@/lib/mockData';
 // Icons will be emojis for now
 // import { Rocket, Play, RotateCcw } from 'lucide-react';
 
@@ -13,16 +13,17 @@ export default function RouteVisualization() {
   const [animationProgress, setAnimationProgress] = useState(0);
   
   const totalDistance = calculateRouteDistance(mockRoute);
-  const displayDistance = totalDistance * (animationProgress / 100);
+  const displayDistance = calculateSpaceDistanceSimple(totalDistance * (animationProgress / 100));
+  const currentMilestone = getCurrentMilestone(displayDistance);
 
   // Zoom out animation
   useEffect(() => {
     if (!isAnimating) return;
 
-    const duration = 8000; // 8 seconds
+    const duration = 20000; // 20 seconds - MUCH SLOWER for demo!
     const startTime = Date.now();
     const startDistance = 8;
-    const endDistance = 30;
+    const endDistance = 35;
 
     const animate = () => {
       const elapsed = Date.now() - startTime;
@@ -65,6 +66,9 @@ export default function RouteVisualization() {
         route={mockRoute} 
         cameraDistance={cameraDistance}
         showRoute={true}
+        animationProgress={animationProgress}
+        isAnimating={isAnimating}
+        currentMilestone={currentMilestone}
       />
 
       {/* Stats Overlay */}

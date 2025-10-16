@@ -7,89 +7,87 @@ export interface RoutePoint {
 
 export const mockRoute: RoutePoint[] = [
   { lat: 42.6977, lng: 23.3219, alt: 550 },  // Start - Sofia center
-  { lat: 43.7000, lng: 23.3400, alt: 555 },
-  { lat: 44.7100, lng: 23.3600, alt: 560 },
-  { lat: 45.7200, lng: 23.3800, alt: 565 },
-  { lat: 46.7300, lng: 23.4000, alt: 570 },
-  { lat: 47.7400, lng: 23.4200, alt: 575 },
-  { lat: 48.7500, lng: 23.4400, alt: 580 },
-  { lat: 49.7600, lng: 23.4600, alt: 585 },
-  { lat: 50.7700, lng: 23.4800, alt: 590 },
-  { lat: 51.7800, lng: 23.5000, alt: 595 },
-  { lat: 52.7900, lng: 23.5200, alt: 600 },
-  { lat: 53.8000, lng: 23.5400, alt: 605 },  // End - much longer route
+  { lat: 42.7000, lng: 23.3400, alt: 555 },
+  { lat: 42.7100, lng: 23.3600, alt: 560 },
+  { lat: 42.7200, lng: 23.3800, alt: 565 },
+  { lat: 42.7300, lng: 23.4000, alt: 570 },
+  { lat: 42.7400, lng: 23.4200, alt: 575 },
+  { lat: 42.7500, lng: 23.4400, alt: 580 },
+  { lat: 42.7600, lng: 23.4600, alt: 585 },
+  { lat: 42.7700, lng: 23.4800, alt: 590 },
+  { lat: 42.7800, lng: 23.5000, alt: 595 },
+  { lat: 42.7900, lng: 23.5200, alt: 600 },
+  { lat: 42.8000, lng: 23.5400, alt: 605 },  // End - much longer route
 ];
 
-// Space milestones
+// Space milestones - BALANCED for real runners!
 export interface Milestone {
-  distance: number;
+  distance: number; // kilometers needed
   name: string;
   altitude: string;
   emoji: string;
   description?: string;
+  reward3D?: 'iss' | 'moon' | 'mars' | 'satellite';
 }
 
 export const spaceMilestones: Milestone[] = [
   { 
-    distance: 5, 
+    distance: 0.05, 
     name: "Stratosphere", 
     altitude: "50 km", 
     emoji: "🌡️",
     description: "Where weather balloons fly"
   },
   { 
-    distance: 10, 
+    distance: 0.1, 
     name: "Commercial Flight Zone", 
-    altitude: "~10 km", 
+    altitude: "10 km", 
     emoji: "✈️",
-    description: "Cruising altitude of airplanes"
+    description: "Cruising altitude"
   },
   { 
-    distance: 100, 
+    distance: 1, 
     name: "Kármán Line", 
     altitude: "100 km", 
     emoji: "🚀",
     description: "The edge of space!"
   },
   { 
-    distance: 400, 
+    distance: 4, 
     name: "ISS Orbit", 
     altitude: "408 km", 
     emoji: "🛰️",
-    description: "Home of astronauts"
+    description: "Home of astronauts",
+    reward3D: 'iss'
   },
   { 
-    distance: 1000, 
-    name: "Low Earth Orbit", 
-    altitude: "1,000 km", 
-    emoji: "🌍",
-    description: "Where most satellites orbit"
-  },
-  { 
-    distance: 35786, 
-    name: "Geostationary Orbit", 
-    altitude: "35,786 km", 
+    distance: 10, 
+    name: "GPS Satellites", 
+    altitude: "20,000 km", 
     emoji: "📡",
-    description: "Communication satellites"
+    description: "Navigation constellation",
+    reward3D: 'satellite'
   },
   { 
-    distance: 384400, 
+    distance: 38, 
     name: "The Moon", 
     altitude: "384,400 km", 
     emoji: "🌕",
-    description: "Earth's natural satellite"
+    description: "Earth's natural satellite",
+    reward3D: 'moon'
   },
   { 
-    distance: 54600000, 
+    distance: 100, 
     name: "Mars (closest)", 
-    altitude: "54.6 million km", 
+    altitude: "54.6M km", 
     emoji: "🔴",
-    description: "The Red Planet"
+    description: "The Red Planet",
+    reward3D: 'mars'
   },
   { 
-    distance: 628730000, 
+    distance: 500, 
     name: "Jupiter", 
-    altitude: "628.73 million km", 
+    altitude: "628M km", 
     emoji: "🪐",
     description: "The giant planet"
   },
@@ -122,6 +120,30 @@ export function calculateRouteDistance(route: RoutePoint[]): number {
 
 function toRad(degrees: number): number {
   return degrees * (Math.PI / 180);
+}
+
+// Calculate space distance using HYBRID exponential + cumulative system
+export function calculateSpaceDistance(runDistanceKm: number, lifetimeKm: number = 0): number {
+  // Exponential scaling based on lifetime progress
+  let multiplier: number;
+  
+  if (lifetimeKm < 10) {
+    multiplier = 100; // 1m run = 100m space (fast start!)
+  } else if (lifetimeKm < 50) {
+    multiplier = 50; // 1m run = 50m space
+  } else if (lifetimeKm < 100) {
+    multiplier = 20; // 1m run = 20m space
+  } else {
+    multiplier = 10; // 1m run = 10m space (hardcore)
+  }
+  
+  return runDistanceKm * multiplier;
+}
+
+// For demo purposes, we'll use a simplified version
+export function calculateSpaceDistanceSimple(runDistanceKm: number): number {
+  // Simple: 1 km run = 100 km space
+  return runDistanceKm * 100;
 }
 
 // Find next milestone based on distance
